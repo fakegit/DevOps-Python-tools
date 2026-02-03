@@ -1,10 +1,10 @@
 {
-  "id": "devops-python-tools",
+  "id": "DevOps-Python-tools",
   "plugin_id": "yaml.config.plugin",
   "material": {
     "type": "git",
     "attributes": {
-  	"url": "https://github.com/harisekhon/devops-python-tools",
+  	"url": "https://github.com/HariSekhon/DevOps-Python-tools",
   	"branch": "master",
   	"auto_update": true
     }
@@ -12,7 +12,7 @@
   "configuration": [
     {
       "key": "file_pattern",
-      "value": "*.gocd.y*ml"
+      "value": "cicd/*.gocd.y*ml"
     }
   ],
   "rules": [

@@ -4,13 +4,13 @@
 #  Author: Hari Sekhon
 #  Date: 2016-08-14 20:42:01 +0100 (Sun, 14 Aug 2016)
 #
-#  https://github.com/harisekhon/devops-python-tools
+#  https://github.com/HariSekhon/DevOps-Python-tools
 #
 #  License: see accompanying Hari Sekhon LICENSE file
 #
 #  If you're using my code you're welcome to connect with me on LinkedIn and optionally send me feedback to help steer this or other code I publish
 #
-#  https://www.linkedin.com/in/harisekhon
+#  https://www.linkedin.com/in/HariSekhon
 #
 
 set -euo pipefail
@@ -110,10 +110,10 @@ for testdir in "$testdir1" "$testdir2"; do
     echo "now check the file basename matches on 'est'":
     run_fail 4 ./find_duplicate_files.py --regex 'est' "$testdir" "$testdir1" --quiet
 
-    echo "now check the file basename matches with specified capture subset '(est)\d'":
+    echo "now check the file basename matches with specified capture subset '(est)\\d'":
     run_fail 4 ./find_duplicate_files.py --regex '(est)\d' "$testdir" "$testdir1"
 
-    echo "now check the file basename doesn't match when the capture includes differing numbers 'est\d'":
+    echo "now check the file basename doesn't match when the capture includes differing numbers 'est\\d'":
     run ./find_duplicate_files.py --regex 'est\d' "$testdir" "$testdir1"
 
     rm "$testdir/test2.txt"

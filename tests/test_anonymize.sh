@@ -4,14 +4,14 @@
 #  Author: Hari Sekhon
 #  Date: 2015-07-28 18:47:41 +0100 (Tue, 28 Jul 2015)
 #
-#  https://github.com/harisekhon/devops-python-tools
+#  https://github.com/HariSekhon/DevOps-Python-tools
 #
 #  License: see accompanying Hari Sekhon LICENSE file
 #
 #  If you're using my code you're welcome to connect with me on LinkedIn
 #  and optionally send me feedback to help improve or steer this or other code I publish
 #
-#  https://www.linkedin.com/in/harisekhon
+#  https://www.linkedin.com/in/HariSekhon
 #
 
 set -euo pipefail
@@ -485,7 +485,9 @@ src[140]='ssh -i myKey -N -L 8888:ec2-1-2-3-4.eu-west-1.compute.amazonaws.com:88
 #dest[140]='ssh -i myKey -N -L 8888:<fqdn>:8888 <user>@<fqdn>'
 dest[140]='ssh -i myKey -N -L 8888:<fqdn>:8888 <user>@<domain>'
 
+# shellcheck disable=SC1117
 src[141]="Failed to open HDFS file hdfs://nameservice1/user/hive/warehouse/area_2/my_database_2.db/my_table_2/part-r-00030-6a789012-3bc4-56d7-e890-123fa456b7c8.snappy.parquet\nError(2): No such file or directory"
+# shellcheck disable=SC1117
 dest[141]="Failed to open HDFS file hdfs://<hostname>/user/<user>/warehouse/<database>.db/<table>/part-r-00030-6a789012-3bc4-56d7-e890-123fa456b7c8.snappy.parquet\nError(2): No such file or directory"
 
 src[142]="ERROR: AnalysisException: Failed to load metadata for table: 'myCustomerTable2'"

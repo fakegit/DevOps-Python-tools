@@ -1,17 +1,17 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #  vim:ts=4:sts=4:sw=4:et
 #
 #  Author: Hari Sekhon
 #  Date: 2016-09-29 15:00:36 +0100 (Thu, 29 Sep 2016)
 #
-#  https://github.com/harisekhon/devops-python-tools
+#  https://github.com/HariSekhon/DevOps-Python-tools
 #
 #  License: see accompanying Hari Sekhon LICENSE file
 #
 #  If you're using my code you're welcome to connect with me on LinkedIn
 #  and optionally send me feedback to help steer this or other code I publish
 #
-#  https://www.linkedin.com/in/harisekhon
+#  https://www.linkedin.com/in/HariSekhon
 #
 
 r"""
@@ -96,7 +96,7 @@ Exits with return code 1 and NO_AVAILABLE_SERVER if none of the supplied servers
 
 See also Advanced HAProxy configurations (part of the Advanced Nagios Plugins Collection) at:
 
-    https://github.com/harisekhon/haproxy-configs
+    https://github.com/HariSekhon/HAProxy-configs
 
 """
 

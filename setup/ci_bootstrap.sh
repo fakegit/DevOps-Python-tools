@@ -4,13 +4,13 @@
 #  Author: Hari Sekhon
 #  Date: 2020-06-02 17:43:35 +0100 (Tue, 02 Jun 2020)
 #
-#  https://github.com/harisekhon/devops-python-tools
+#  https://github.com/HariSekhon/DevOps-Python-tools
 #
 #  License: see accompanying Hari Sekhon LICENSE file
 #
 #  If you're using my code you're welcome to connect with me on LinkedIn and optionally send me feedback to help steer this or other code I publish
 #
-#  https://www.linkedin.com/in/harisekhon
+#  https://www.linkedin.com/in/HariSekhon
 #
 
 # Designed to bootstrap all CI systems with retries to make sure the networking, package lists and package repos works before proceeding
@@ -52,7 +52,7 @@ retry(){
 if [ "$(uname -s)" = Darwin ]; then
     echo "Bootstrapping Mac"
     # removing adjacent dependency to be able to curl from github to avoid submodule circular dependency (git / submodule / install git & make)
-    #retry "$srcdir/install_homebrew.sh"
+    #retry "$srcdir/../install/install_homebrew.sh"
     if command -v brew 2>&1; then
         # fix for CI runners on Mac with shallow homebrew clone - which is failing all the BuildKite builds
         for git_root in /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core /usr/local/Homebrew/Library/Taps/homebrew/homebrew-cask; do
@@ -72,8 +72,9 @@ elif [ "$(uname -s)" = Linux ]; then
         retry $sudo apk update
         retry $sudo apk add --no-progress bash git make
     elif type apt-get >/dev/null 2>&1; then
-        retry $sudo apt-get update -q
-        retry $sudo apt-get install -qy git make
+        opts="-q -o DPkg::Lock::Timeout=1200"
+        retry $sudo apt-get update  $opts
+        retry $sudo apt-get install $opts -y git make
     elif type yum >/dev/null 2>&1; then
         #retry $sudo yum makecache
         retry $sudo yum install -qy git make

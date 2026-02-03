@@ -1,17 +1,17 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #  vim:ts=4:sts=4:sw=4:et
 #
 #  Author: Hari Sekhon
 #  Date: 2015-11-03 21:38:52 +0000 (Tue, 03 Nov 2015)
 #
-#  https://github.com/harisekhon/devops-python-tools
+#  https://github.com/HariSekhon/DevOps-Python-tools
 #
 #  License: see accompanying Hari Sekhon LICENSE file
 #
 #  If you're using my code you're welcome to connect with me on LinkedIn and optionally send me feedback
 #  to help improve or steer this or other code I publish
 #
-#  https://www.linkedin.com/in/harisekhon
+#  https://www.linkedin.com/in/HariSekhon
 #
 
 """
@@ -57,6 +57,7 @@ os.environ['PYSPARK_SUBMIT_ARGS'] = '--packages com.databricks:spark-csv_2.10:1.
                                     'com.databricks:spark-avro_2.10:2.0.1 %s' \
                                     % os.getenv('PYSPARK_SUBMIT_ARGS', '')
 pyspark_path()
+# pylint: disable=import-outside-toplevel
 from pyspark import SparkContext    # pylint: disable=wrong-import-position,import-error
 from pyspark import SparkConf       # pylint: disable=wrong-import-position,import-error
 from pyspark.sql import SQLContext  # pylint: disable=wrong-import-position,import-error
@@ -166,7 +167,6 @@ class SparkCSVToAvro(CLI):
             die("Spark version couldn't be determined. " + support_msg('pytools'))
 
         #  pylint: disable=invalid-name
-        df = None
         if isMinVersion(spark_version, 1.4):
             if has_header and not schema:
                 log.info('inferring schema from CSV headers')
@@ -197,6 +197,7 @@ class SparkCSVToAvro(CLI):
         # this doesn't work in Spark <= 1.3 and the github docs don't mention the older methods for writing avro using
         # the databricks avro driver
         df.write.format('com.databricks.spark.avro').save(avro_dir)
+
 
 if __name__ == '__main__':
     SparkCSVToAvro().main()

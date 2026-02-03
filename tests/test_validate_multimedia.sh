@@ -4,13 +4,13 @@
 #  Author: Hari Sekhon
 #  Date: 2016-05-01 20:46:42 +0100 (Sun, 01 May 2016)
 #
-#  https://github.com/harisekhon/devops-python-tools
+#  https://github.com/HariSekhon/DevOps-Python-tools
 #
 #  License: see accompanying Hari Sekhon LICENSE file
 #
 #  If you're using my code you're welcome to connect with me on LinkedIn and optionally send me feedback to help improve or steer this or other code I publish
 #
-#  https://www.linkedin.com/in/harisekhon
+#  https://www.linkedin.com/in/HariSekhon
 #
 
 set -euo pipefail
@@ -32,7 +32,7 @@ if ! type -P ffmpeg &>/dev/null; then
     echo "WARNING: ffmpeg not installed, skipping validate_multimedia.py tests"
     exit 0
     if type -P apt-get &>/dev/null; then
-        sudo apt-get install -y ffmpeg
+        sudo apt-get install -o DPkg::Lock::Timeout=1200 -y ffmpeg
     elif type -P yum &>/dev/null; then
         echo "WARNING: cannot auto-install ffmpeg on RHEL/CentOS, the 3rd party repos and deps are seriously broken"
     fi

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #  coding=utf-8
 #  vim:ts=4:sts=4:sw=4:et
 #
@@ -6,16 +6,16 @@
 #  Date: 2018-08-08 19:02:02 +0100 (Wed, 08 Aug 2018)
 #  Original Date: 2013-07-18 21:17:41 +0100 (Thu, 18 Jul 2013)
 #
-#  https://github.com/harisekhon/devops-python-tools
+#  https://github.com/HariSekhon/DevOps-Python-tools
 #
-#  ported from Perl version from DevOps Perl Tools repo (https://github.com/harisekhon/devops-perl-tools)
+#  ported from Perl version from DevOps Perl Tools repo (https://github.com/HariSekhon/DevOps-Perl-tools)
 #
 #  License: see accompanying Hari Sekhon LICENSE file
 #
 #  If you're using my code you're welcome to connect with me on LinkedIn
 #  and optionally send me feedback to help steer this or other code I publish
 #
-#  https://www.linkedin.com/in/harisekhon
+#  https://www.linkedin.com/in/HariSekhon
 #
 
 
@@ -36,7 +36,7 @@ as this program, one PCRE format regex per line, blank lines and lines prefixed 
 
 Ignore phrases are in a similar file anonymize_ignore.conf, also adjacent to this program.
 
-Based on Perl Anonymize.pl from https://github.com/harisekhon/devops-perl-tools
+Based on Perl Anonymize.pl from https://github.com/HariSekhon/DevOps-Perl-tools
 
 The Perl version is incredibly faster than Python due to the better regex engine
 
@@ -95,7 +95,7 @@ except ImportError as _:
     sys.exit(4)
 
 __author__ = 'Hari Sekhon'
-__version__ = '0.10.12'
+__version__ = '0.11.0'
 
 ip_regex = r'(?!127\.0\.0\.)' + ip_regex
 subnet_mask_regex = r'(?!127\.0\.0\.)' + subnet_mask_regex
@@ -792,46 +792,47 @@ class Anonymize(CLI):
     # allow to easily switch pre-compilation on/off for testing
     # testing shows on a moderate sized file that it is a couple secs quicker to use pre-compiled regex
     def compile(self, name, regex):
+        log.debug(f"compiling regex '{name}' = '{regex}'")
         self.regex[name] = re.compile(regex, re.I)
         #self.regex[name] = regex
 
     def prepare_regex(self):
         self.compile('hostname',
-                     r'(?<!\w\]\s)' + \
-                     r'(?<!\.)' + \
+                     r'(?<!\w\]\s)' +
+                     r'(?<!\.)' +
                      # ignore Java methods such as SomeClass$method:20
-                     r'(?<!\$)' + \
+                     r'(?<!\$)' +
                      # ignore Java stack traces eg. at SomeClass(Thread.java;789)
-                     r'(?!\(\w+\.java:\d+\))' + \
+                     r'(?!\(\w+\.java:\d+\))' +
                      # don't match 2018-01-01T00:00:00 => 2018-01-<hostname>:00:00
-                     r'(?!\d+T\d+:\d+)' + \
-                     r'(?!\d+[^A-Za-z0-9]|' + \
-                     self.custom_ignores_raw + ')' + \
-                     '(' + hostname_regex + ')' + \
+                     r'(?!\d+T\d+:\d+)' +
+                     r'(?!\d+[^A-Za-z0-9]|' +
+                     self.custom_ignores_raw + ')' +
+                     '(' + hostname_regex + ')' +
                      self.negative_host_lookbehind + r':(\d{1,5}(?!\.?\w))',
                     )
         self.compile('domain',
                      # don't match java -some.net.property
-                     #r'(?<!-)' + \
-                     r'(?!' + self.custom_ignores_raw + ')' + \
-                     domain_regex_strict + \
+                     #r'(?<!-)' +
+                     r'(?!' + self.custom_ignores_raw + ')' +
+                     domain_regex_strict +
                      # don't match java -Dsome.net.property=
-                     r'(?!=)' + \
-                     r'(?!\.[A-Za-z])(\b|$)' + \
+                     r'(?!=)' +
+                     r'(?!\.[A-Za-z])(\b|$)' +
                      # ignore Java stack traces eg. at SomeClass(Thread.java;789)
-                     r'(?!\(\w+\.java:\d+\))' + \
+                     r'(?!\(\w+\.java:\d+\))' +
                      self.negative_host_lookbehind
                     )
         self.compile('fqdn',
                      # don't match java -some.net.property
-                     #r'(?<!-)' + \
-                     r'(?!' + self.custom_ignores_raw + ')' + \
-                     '(' + fqdn_regex + ')' + \
+                     #r'(?<!-)' +
+                     r'(?!' + self.custom_ignores_raw + ')' +
+                     '(' + fqdn_regex + ')' +
                      # don't match java -Dsome.net.property=
-                     r'(?!=)' + \
-                     r'(?!\.[A-Za-z])(\b|$)' + \
+                     r'(?!=)' +
+                     r'(?!\.[A-Za-z])(\b|$)' +
                      # ignore Java stack traces eg. at SomeClass(Thread.java;789)
-                     r'(?!\(\w+\.java:\d+\))' + \
+                     r'(?!\(\w+\.java:\d+\))' +
                      self.negative_host_lookbehind
                     )
         re_regex_ending = re.compile('_regex$')

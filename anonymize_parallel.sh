@@ -4,13 +4,13 @@
 #  Author: Hari Sekhon
 #  Date: 2019-03-05 18:27:00 +0000 (Tue, 05 Mar 2019)
 #
-#  https://github.com/harisekhon/devops-python-tools
+#  https://github.com/HariSekhon/DevOps-Python-tools
 #
 #  License: see accompanying Hari Sekhon LICENSE file
 #
 #  If you're using my code you're welcome to connect with me on LinkedIn and optionally send me feedback to help steer this or other code I publish
 #
-#  https://www.linkedin.com/in/harisekhon
+#  https://www.linkedin.com/in/HariSekhon
 #
 
 set -euo pipefail
@@ -48,6 +48,7 @@ parallelism="${PARALLELISM:-$(cpu_count)}"
 file_list=""
 
 while [ $# -gt 0 ]; do
+    # shellcheck disable=SC2119
     case $1 in
         -p|--parallel)  parallelism="$2"
                         shift
@@ -67,7 +68,7 @@ for filename in $file_list; do
     echo "Removing any pre-existing parts:"
     rm -v "$filename".* 2>/dev/null || :
     echo
-    "$srcdir/bash-tools/split.sh" --parts "$parallelism" "$filename"
+    "$srcdir/bash-tools/bin/split.sh" --parts "$parallelism" "$filename"
     echo "Anonymizing parts"
     for file_part in "$filename".*; do
         cmd="$srcdir/anonymize.py -a $file_part > $file_part.anonymized"

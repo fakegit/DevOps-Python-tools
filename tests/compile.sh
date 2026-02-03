@@ -4,13 +4,13 @@
 #  Author: Hari Sekhon
 #  Date: 2015-05-25 01:38:24 +0100 (Mon, 25 May 2015)
 #
-#  https://github.com/harisekhon/devops-python-tools
+#  https://github.com/HariSekhon/DevOps-Python-tools
 #
 #  License: see accompanying Hari Sekhon LICENSE file
 #
 #  If you're using my code you're welcome to connect with me on LinkedIn and optionally send me feedback to help improve or steer this or other code I publish
 #
-#  https://www.linkedin.com/in/harisekhon
+#  https://www.linkedin.com/in/HariSekhon
 #
 
 set -eu
@@ -19,17 +19,18 @@ srcdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd "$srcdir/..";
 
-. ./tests/utils.sh
+# shellcheck disable=SC1090
+. "$srcdir/utils.sh"
 
 hr
 echo "Compiling all Python files"
 hr
 echo
 
-for x in $(find . -iname '*.py' -o -iname '*.jy'); do
-    isExcluded "$x" && continue
-    echo "compiling $x"
-    python -m py_compile $x
-done
+while read -r filename; do
+    isExcluded "$filename" && continue
+    echo "compiling $filename"
+    python -m py_compile "$filename"
+done < <(find . -iname '*.py' -o -iname '*.jy')
 echo
 echo

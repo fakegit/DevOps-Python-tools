@@ -1,17 +1,17 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #  vim:ts=4:sts=4:sw=4:et
 #
 #  Author: Hari Sekhon
 #  Date: 2017-09-15 15:29:39 +0200 (Fri, 15 Sep 2017)
 #
-#  https://github.com/harisekhon/devops-python-tools
+#  https://github.com/HariSekhon/DevOps-Python-tools
 #
 #  License: see accompanying Hari Sekhon LICENSE file
 #
 #  If you're using my code you're welcome to connect with me on LinkedIn and optionally send me feedback
 #  to help improve or steer this or other code I publish
 #
-#  https://www.linkedin.com/in/harisekhon
+#  https://www.linkedin.com/in/HariSekhon
 #
 
 """
@@ -58,7 +58,7 @@ except ImportError as _:
     sys.exit(4)
 
 __author__ = 'Hari Sekhon'
-__version__ = '0.12.2'
+__version__ = '0.12.3'
 
 
 class IniValidatorTool(CLI):
@@ -72,7 +72,7 @@ class IniValidatorTool(CLI):
         self.re_suffix = re.compile(r'.*\.(?:ini|properties)$', re.I)
         # In Windows ini key cannot contain equals sign = or semicolon ;
         #                                   key=val or [section]
-        self.re_ini_section = re.compile(r'^\s*\[([\w=\:\.-]+)\]\s*$')
+        self.re_ini_section = re.compile(r'^\s*\[([\w\s=\:\.-]+)\]\s*$')
         self.re_ini_key = re.compile(r'^\s*(?:[^\[;=]+)s*$')
         # INI value can be anything .* so not regex'ing it
         self.valid_ini_msg = '<unknown> => INI OK'

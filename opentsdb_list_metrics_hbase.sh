@@ -4,13 +4,13 @@
 #  Author: Hari Sekhon
 #  Date: 2018-07-13 22:36:14 +0100 (Fri, 13 Jul 2018)
 #
-#  https://github.com/harisekhon/devops-python-tools
+#  https://github.com/HariSekhon/DevOps-Python-tools
 #
 #  License: see accompanying Hari Sekhon LICENSE file
 #
 #  If you're using my code you're welcome to connect with me on LinkedIn and optionally send me feedback to help steer this or other code I publish
 #
-#  https://www.linkedin.com/in/harisekhon
+#  https://www.linkedin.com/in/HariSekhon
 #
 
 set -euo pipefail
@@ -91,6 +91,7 @@ print_metrics(){
 print_metrics_by_age(){
     # hackish but convenient - forking to the date command thousands or hundreds of thousands of times can take hours, python takes 10 secs even for 250,000+ metrics
     tmp_python_script=$(mktemp)
+    # shellcheck disable=SC1117
     cat > "$tmp_python_script" <<EOF
 from __future__ import print_function
 import sys, time

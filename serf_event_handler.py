@@ -1,17 +1,17 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #  vim:ts=4:sts=4:sw=4:et
 #
 #  Author: Hari Sekhon
 #  Date: 2016-01-16 15:44:16 +0000 (Sat, 16 Jan 2016)
 #
-#  https://github.com/harisekhon/devops-python-tools
+#  https://github.com/HariSekhon/DevOps-Python-tools
 #
 #  License: see accompanying Hari Sekhon LICENSE file
 #
 #  If you're using my code you're welcome to connect with me on LinkedIn and optionally send me feedback
 #  to help improve or steer this or other code I publish
 #
-#  https://www.linkedin.com/in/harisekhon
+#  https://www.linkedin.com/in/HariSekhon
 #
 
 """
@@ -61,7 +61,7 @@ except ImportError as _:
     sys.exit(4)
 
 __author__ = 'Hari Sekhon'
-__version__ = '0.2.2'
+__version__ = '0.2.3'
 
 class SerfEventHandler(CLI):
 
@@ -95,7 +95,7 @@ class SerfEventHandler(CLI):
 
     def enable_commands(self):
         if self.event in ['query', 'event']:
-            cmd = None
+            cmd = ''
             if self.event == 'query':
                 cmd = self.query_name
             elif self.event == 'user':

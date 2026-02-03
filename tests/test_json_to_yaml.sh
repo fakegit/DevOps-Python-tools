@@ -4,30 +4,28 @@
 #  Author: Hari Sekhon
 #  Date: 2019-12-19 18:04:15 +0000 (Thu, 19 Dec 2019)
 #
-#  https://github.com/harisekhon/devops-python-tools
+#  https://github.com/HariSekhon/DevOps-Python-tools
 #
 #  License: see accompanying Hari Sekhon LICENSE file
 #
 #  If you're using my code you're welcome to connect with me on LinkedIn and optionally send me feedback to help steer this or other code I publish
 #
-#  https://www.linkedin.com/in/harisekhon
+#  https://www.linkedin.com/in/HariSekhon
 #
 
 set -euo pipefail
 [ -n "${DEBUG:-}" ] && set -x
 srcdir="$(cd "$(dirname "$0")" && pwd)"
 
-cd "$srcdir";
+cd "$srcdir/..";
 
-# shellcheck disable=SC1091
-. utils.sh
+# shellcheck disable=SC1091,SC1090
+. "$srcdir/utils.sh"
 
-# shellcheck disable=SC1091
-. ../bash-tools/lib/utils.sh
+# shellcheck disable=SC1091,SC1090
+. "$srcdir/../bash-tools/lib/utils.sh"
 
 section "JSON => YAML"
-
-cd ..
 
 tmpfile="$(mktemp json_to_yaml_test.XXXXX.yml)"
 #echo "tmpfile is $tmpfile"

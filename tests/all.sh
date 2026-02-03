@@ -4,13 +4,13 @@
 #  Author: Hari Sekhon
 #  Date: 2015-11-05 23:29:15 +0000 (Thu, 05 Nov 2015)
 #
-#  https://github.com/harisekhon/devops-python-tools
+#  https://github.com/HariSekhon/DevOps-Python-tools
 #
 #  License: see accompanying Hari Sekhon LICENSE file
 #
 #  If you're using my code you're welcome to connect with me on LinkedIn and optionally send me feedback to help improve or steer this or other code I publish
 #
-#  https://www.linkedin.com/in/harisekhon
+#  https://www.linkedin.com/in/HariSekhon
 #
 
 set -euo pipefail
@@ -29,8 +29,9 @@ section "Running PyTools ALL"
 
 # runs against . by default
 cd "$srcdir/..";
+# shellcheck disable=SC1090
 # has to be included so that isExcluded function is inherited
-. bash-tools/check_all.sh
+. "$srcdir/../bash-tools/checks/check_all.sh"
 
 #tests/test_yamllint.sh
 
@@ -40,4 +41,4 @@ exit 0
 # pyspark not found
 tests/help.sh
 
-bash-tools/run_tests.sh
+bash-tools/checks/run_tests.sh

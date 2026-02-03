@@ -1,17 +1,17 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #  vim:ts=4:sts=4:sw=4:et
 #
 #  Author: Hari Sekhon
 #  Date: 2019-12-19 11:43:25 +0000 (Thu, 19 Dec 2019)
 #
-#  https://github.com/harisekhon/devops-python-tools
+#  https://github.com/HariSekhon/DevOps-Python-tools
 #
 #  License: see accompanying Hari Sekhon LICENSE file
 #
 #  If you're using my code you're welcome to connect with me on LinkedIn and optionally send me feedback
 #  to help improve or steer this or other code I publish
 #
-#  https://www.linkedin.com/in/harisekhon
+#  https://www.linkedin.com/in/HariSekhon
 #
 
 """
@@ -31,9 +31,9 @@ This version adds date parsing for finding keys older than a given time for enfo
 
 See also the DevOps Bash Tools repo and The Advanced Nagios Plugins Collection for similar tools
 
-https://github.com/harisekhon/devops-bash-tools
+https://github.com/HariSekhon/DevOps-Bash-tools
 
-https://github.com/harisekhon/nagios-plugins
+https://github.com/HariSekhon/Nagios-Plugins
 
 """
 

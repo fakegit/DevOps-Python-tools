@@ -2,11 +2,11 @@
 #  Author: Hari Sekhon
 #  Date: 2013-02-03 10:25:36 +0000 (Sun, 03 Feb 2013)
 #
-#  https://github.com/harisekhon/devops-python-tools
+#  https://github.com/HariSekhon/DevOps-Python-tools
 #
 #  License: see accompanying LICENSE file
 #
-#  https://www.linkedin.com/in/harisekhon
+#  https://www.linkedin.com/in/HariSekhon
 #
 
 # Travis has custom python install earlier in $PATH even in Perl builds so need to install PyPI modules to non-system python otherwise they're not found by programs.
@@ -21,15 +21,15 @@
 #
 # Alpine:
 #
-#   apk add --no-cache git make && git clone https://github.com/harisekhon/devops-python-tools pytools && cd pytools && make
+#   apk add --no-cache git make && git clone https://github.com/HariSekhon/DevOps-Python-tools pytools && cd pytools && make
 #
 # Debian / Ubuntu:
 #
-#   apt-get update && apt-get install -y make git && git clone https://github.com/harisekhon/devops-python-tools pytools && cd pytools && make
+#   apt-get update && apt-get install -y make git && git clone https://github.com/HariSekhon/DevOps-Python-tools pytools && cd pytools && make
 #
 # RHEL / CentOS:
 #
-#   yum install -y make git && git clone https://github.com/harisekhon/devops-python-tools pytools && cd pytools && make
+#   yum install -y make git && git clone https://github.com/HariSekhon/DevOps-Python-tools pytools && cd pytools && make
 
 # ===================
 
@@ -86,12 +86,12 @@ init:
 #	@$(MAKE) $@c
 %.pyc:: %.py
 	@# this utility script supports taking .pyc or .pyo names and still does the right thing
-	@bash-tools/python_pip_install_for_script.sh $@ --exclude harisekhon && \
+	@PIP=$(PIP) bash-tools/python/python_pip_install_for_script.sh $@ --exclude harisekhon && \
 	python -m py_compile $< && \
 	echo && \
 	echo Generated $@
 %.pyo:: %.py
-	@bash-tools/python_pip_install_for_script.sh $@ --exclude harisekhon && \
+	@PIP=$(PIP) bash-tools/python/python_pip_install_for_script.sh $@ --exclude harisekhon && \
 	python -O -m py_compile $< && \
 	echo && \
 	echo Generated $@
@@ -116,20 +116,20 @@ python: pylib
 	fi
 
 	@# only install pip packages not installed via system packages
-	@#$(SUDO_PIP) pip install --upgrade -r requirements.txt
-	@#$(SUDO_PIP) pip install -r requirements.txt
-	@PIP_OPTS="--ignore-installed" bash-tools/python_pip_install_if_absent.sh requirements.txt
+	@#$(SUDO_PIP) $(PIP) install --upgrade -r requirements.txt
+	@#$(SUDO_PIP) $(PIP) install -r requirements.txt
+	@PIP=$(PIP) PIP_OPTS="--ignore-installed" bash-tools/python/python_pip_install_if_absent.sh requirements.txt
 
 	@# python-krbV dependency doesn't build on Mac any more and is unmaintained and not ported to Python 3
 	@# python_pip_install_if_absent.sh would import snakebite module and not trigger to build the enhanced snakebite with [kerberos] bit
-	bash-tools/setup/python_install_snakebite.sh
+	PIP=$(PIP) bash-tools/setup/python_install_snakebite.sh || :
 
 	# Python >= 3.4 - try but accept failure in case we're not on the right version of Python
-	@#if [ "$$(echo "$$(python -V 2>&1 | grep -Eo '[[:digit:]]+\.[[:digit:]]+') >= 3.4" | bc -l)" = 1 ]; then bash-tools/python_pip_install.sh "avro-python3"; fi
-	bash-tools/python_pip_install.sh "avro-python3" || :
+	@#if [ "$$(echo "$$(python -V 2>&1 | grep -Eo '[[:digit:]]+\.[[:digit:]]+') >= 3.4" | bc -l)" = 1 ]; then PIP=$(PIP) bash-tools/python/python_pip_install.sh "avro-python3"; fi
+	PIP=$(PIP) bash-tools/python/python_pip_install.sh "avro-python3" || :
 
 	@# for impyla
-	@#$(SUDO_PIP) pip install --upgrade setuptools || :
+	@#$(SUDO_PIP) $(PIP) install --upgrade setuptools || :
 	@#
 	@# snappy may fail to install on Mac not finding snappy-c.h - workaround:
 	@#
@@ -140,21 +140,21 @@ python: pylib
 	@# /usr/local/include/snappy-c.h
 	@#
 	@# sudo su
-	@# LD_RUN_PATH=/usr/local/include pip install snappy
+	@# LD_RUN_PATH=/usr/local/include $(PIP) install snappy
 	@#
-	@#$(SUDO_PIP) pip install --upgrade -r requirements.txt
+	@#$(SUDO_PIP) $(PIP) install --upgrade -r requirements.txt
 
 	@# for ipython-notebook-pyspark.py
-	@#$(SUDO_PIP) pip install jinja2
+	@#$(SUDO_PIP) PIP=$(PIP) install jinja2
 	@# HiveServer2
-	@#$(SUDO_PIP) pip install pyhs2
+	@#$(SUDO_PIP) $(PIP) install pyhs2
 	@# Impala
-	@#$(SUDO_PIP) pip install impyla
+	@#$(SUDO_PIP) $(PIP) install impyla
 	@# must downgrade happybase library to work on Python 2.6
-	@#if [ "$$(python -c 'import sys; sys.path.append("pylib"); import harisekhon; print(harisekhon.utils.getPythonVersion())')" = "2.6" ]; then $(SUDO_PIP) pip install --upgrade "happybase==0.9"; fi
+	@#if [ "$$(python -c 'import sys; sys.path.append("pylib"); import harisekhon; print(harisekhon.utils.getPythonVersion())')" = "2.6" ]; then $(SUDO_PIP) $(PIP) install --upgrade "happybase==0.9"; fi
 
 	@# Python >= 2.7 - won't build on 2.6, handle separately and accept failure
-	@bash-tools/python_pip_install.sh "ipython[notebook]" || :
+	@PIP=$(PIP) bash-tools/python/python_pip_install.sh "ipython[notebook]" || :
 	@echo
 	$(MAKE) pycompile
 	@echo
@@ -165,7 +165,7 @@ python: pylib
 
 .PHONY: parquet-tools
 parquet-tools:
-	@BIN='.' bash-tools/setup/install_parquet-tools.sh
+	@BIN='.' bash-tools/install/install_parquet-tools.sh
 
 .PHONY: apk-packages-extra
 apk-packages-extra:
@@ -175,7 +175,7 @@ apk-packages-extra:
 
 .PHONY: apt-packages-extra
 apt-packages-extra:
-	if [ -z "$(NOJAVA)" ]; then which java || $(SUDO) apt-get install -y default-jdk; fi
+	if [ -z "$(NOJAVA)" ]; then which java || bash-tools/packages/apt_install_packages.sh default-jdk; fi
 
 # for validate_multimedia.py
 # available in Alpine 2.6, 2.7 and 3.x
@@ -189,8 +189,8 @@ apk-packages-multimedia:
 # Debian 9 Stretch onwards, not available in Debian 8 Jessie
 .PHONY: apt-packages-multimedia
 apt-packages-multimedia:
-	$(SUDO) apt-get update
-	$(SUDO) apt-get install -y --no-install-recommends ffmpeg
+	$(SUDO) apt-get update  -o DPkg::Lock::Timeout=1200
+	$(SUDO) apt-get install -o DPkg::Lock::Timeout=1200 -y --no-install-recommends ffmpeg
 
 # for validate_multimedia.py
 .PHONY: yum-packages-multimedia
@@ -200,9 +200,10 @@ yum-packages-multimedia:
 
 .PHONY: jython
 jython:
-	if [ -x /sbin/apk ];        then apk add --no-cache wget expect; fi
-	if [ -x /usr/bin/apt-get ]; then apt-get install -y wget expect; fi
-	if [ -x /usr/bin/yum ];     then yum install -y wget expect; fi
+	@#if [ -x /sbin/apk ];        then apk add --no-cache wget expect; fi
+	@#if [ -x /usr/bin/apt-get ]; then apt-get install -y wget expect; fi
+	@#if [ -x /usr/bin/yum ];     then yum install -y wget expect; fi
+	bash-tools/packages/install_packages.sh wget expect
 	sh jython_install.sh
 
 .PHONY: test-lib
@@ -210,12 +211,13 @@ test-lib:
 	cd pylib && $(MAKE) test
 
 .PHONY: test
-test: test-lib
+#test: test-lib
+test:
 	tests/all.sh
 
 .PHONY: basic-test
 basic-test: test-lib
-	bash-tools/check_all.sh
+	bash-tools/checks/check_all.sh
 
 .PHONY: install
 install: build

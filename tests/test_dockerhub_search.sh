@@ -4,13 +4,13 @@
 #  Author: Hari Sekhon
 #  Date: 2016-01-16 16:35:51 +0000 (Sat, 16 Jan 2016)
 #
-#  https://github.com/harisekhon/devops-python-tools
+#  https://github.com/HariSekhon/DevOps-Python-tools
 #
 #  License: see accompanying Hari Sekhon LICENSE file
 #
 #  If you're using my code you're welcome to connect with me on LinkedIn and optionally send me feedback to help improve or steer this or other code I publish
 #
-#  https://www.linkedin.com/in/harisekhon
+#  https://www.linkedin.com/in/HariSekhon
 #
 
 set -euo pipefail
@@ -36,7 +36,7 @@ check './dockerhub_search.py hadoop-dev | grep harisekhon/hadoop-dev' "DockerHub
 # causes IOError: [Errno 32] Broken pipe
 #unset PYTHONUNBUFFERED
 # shellcheck disable=SC2016
-check '[ $(./dockerhub_search.py -q harisekhon | head -n 40 | tee /dev/stderr | grep "^harisekhon/[A-Za-z0-9_-]*$" | wc -l) = 40 ]' "DockerHub Search quiet mode for shell scripting"
+check '[ "$(./dockerhub_search.py -q harisekhon | head -n 40 | tee /dev/stderr | grep -c "^harisekhon/[A-Za-z0-9_-]*$")" = 40 ]' "DockerHub Search quiet mode for shell scripting"
 
 echo
 echo
